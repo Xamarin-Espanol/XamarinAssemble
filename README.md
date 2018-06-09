@@ -15,7 +15,7 @@ Para poder realizar este workshop es fundamental tener instalado correctamente V
 
 ## Modulos
 
-1. [Using Forms](./01.using-forms): En este módulo aprenderemos a utilizar Xamarin.Forms para el desarrollo de aplicaciones.
+1. [Using Forms](./01-using-forms): En este módulo aprenderemos a utilizar Xamarin.Forms para el desarrollo de aplicaciones.
 
 1. [Azure Mobile App](./02-azure-mobile-app): En este módulo veremos como configurar Azure Mobile App para ser usado desde nuestra app.
 
@@ -33,4 +33,4 @@ Una vez terminado el workshop, se agradece completar la [encuesta]() para poder 
 Este proyecto está licenciado bajo la Licencia MIT - ver [LICENSE.md](LICENSE.md) para mas detalles.
 
 ## Empecemos!
-Clonate o descargate el Repo y avanzá al [módulo 1](./01-hola-mundo)
+Clonate o descargate el Repo y avanzá al [módulo 1](./01-using-forms)
