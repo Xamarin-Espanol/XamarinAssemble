@@ -58,7 +58,7 @@ Ahora que ya hemos subido nuestros datos exitosamente a nuestro backend de Azure
 
 ![Test CSV](./images/09.TestRecurso.PNG)
 
-Open a Web Browser, and hit the link in the following format:
+Abrir un browser y pegarle a los recursos con el siguiente formato:
 
 **Speaker**
 ```
@@ -68,30 +68,27 @@ https://<yourappservicename>.azurewebsites.net/tables/Speaker?ZUMO-API-VERSION=2
 ```
 https://<yourappservicename>.azurewebsites.net/tables/Session?ZUMO-API-VERSION=2.0.0 
 ```
-Both should give you the the data in `json` format.
+Ambos deberian devolverte la informacion en formato `json`.
 
-Now, let's edit the code to access this data into our `MyEvents` app.
+Ahora, vamos a editar el codigo para acceder a la informacion de la aplicacion XamarinAssemble.
 
-## Connecting App to Azure Mobile Apps backend
+## Conectandonos desde la App al backend de Azure Mobile Apps
 
-To connect to the Azure Mobile Apps backend & to take advantage of offline data sync support, you need two Nuget Packages `Microsoft.Azure.Mobile.Client`  and `Microsoft.Azure.Mobile.Client.SQLiteStore` added to all your projects. To save time, this has been already added. You can verify them by right clicking your solution and hit **Manage Nuget Packages for solution...**
+Para conectarnos al backend de Azure Mobile apps y poder aprovechar todas las ventajas del soporte offline que nos provee, necesitamos instalar dos paquetes en nuestros proyectos: `Microsoft.Azure.Mobile.Client`y `Microsoft.Azure.Mobile.Client.SQLiteStore`. Para agilizar, ya estan instalados, pero de todas formas podes verificarlo clickeando con el boton derecho del mouse sobre la solucion y seleccionando la opcion **Manage Nuget Packages for solution...**
 
 ![Azure Nuget Packages](https://raw.githubusercontent.com/nishanil/Dev-Days-HOL/master/02%20Cloud-Labs/screenshots/Azure-Nuget-Packages.png?token=AC9rtmcdDk5_XxPfM26Vts8NNRBto9O0ks5X0sP5wA%3D%3D)
 
-Now, let's write some code.
-
-Open the **MyEvents/Constants.cs** file and update the `ApplicationURL` to your Mobile App Service URL in the specified format. Please note: You don't need to append the table names. This is taken care automatically by the Azure Client SDKs.
+Vamos a abrir el archivo **XamarinAssemble/Constants.cs** y a actualizar la variable `ApplicationURL` para que apunte a la URL del servicio Mobile App en el formato especificado. 
 
 ```csharp
 public static string ApplicationURL = @"https://<yourappservicename>.azurewebsites.net";
 ```
 
-### Connect to Cloud
+### Conectandonos a la nube
 
-The code to connect to cloud is neatly abstracted away in the `Cloud/AzureDataManager.cs` class. Azure Client SDKs have a great support for offline data sync. Offline data sync is a client and server SDK feature of Azure Mobile Apps that makes it easy for developers to create apps that are functional without a network connection. When your app is in offline mode, users can still create and modify data, which will be saved to a local store. When the app is back online, it can synchronize local changes with your Azure Mobile App backend. The feature also includes support for detecting conflicts when the same record is changed on both the client and the backend. Conflicts can then be handled either on the server or the client. 
-To take advantage of this feature, this demo uses `SyncTable` and initializes a local store. 
+El codigo para conectarnos a la nube esta en la clase `Cloud/AzureDataManager.cs`. Los SDK de Azure Client tienen un gran soporte para la sincronizacion de datos offline. Lo que significa que cuando la aplicacion esta en modo offline, los usuarios pueden crear y modificar los datos, los cuales son guardados en una base de datos local. Cuando la aplicacion vuelve a estar online, se sincronizan las modificaciones realizaon el backend de Azure Mobile App. Esta caracteristica tambien incluye la deteccion de conflictos cuando el mismo registro ha sido modificado tanto en el cliente como en el backend. Los conflictos pueden ser solucionados tanto en el servidor como en el cliente. Para aprovechar estas ventajas, esta demo usa `SyncTable` e inicializa una base de datos local. 
 
-Here's the Initialize code for your reference
+De la siguiente manera inicializamos todo lo necesario:
 
 ```csharp
 private void Initialize()
@@ -108,11 +105,12 @@ private void Initialize()
 }
 ```
 
-To get data for `Sessions` and `Speakers`, the `AzureDataManager` has two methods `GetSessionsAsync()` and `GetSpeakersAsync()` which can be accessed by `IDataManager` implementation.
+Para obtener la informacion de `Sessions` y `Speakers`, el `AzureDataManager` tiene dos metodos `GetSessionsAsync()` y `GetSpeakersAsync()` los cuales pueden ser accedidos por la implementacion de `IDataManager`.
 
 ### Get Sessions
 
-Open **MyEvents\ViewModels\SessionsViewModel.cs**, in the `GetSessions()` method, replace the code 
+Abrir el archivo **XamarinAssemble\ViewModels\SessionsViewModel.cs**, en el metodo `GetSessions()` reemplazar el codigo
+
 ```csharp
 using (var client = new HttpClient())
 {
@@ -131,7 +129,8 @@ using (var client = new HttpClient())
     }
 }
 ```
-with the code to connect to cloud
+con el codigo para conectarnos a la nube:
+
 ```csharp
 var items = await AzureDataManager.DefaultManager.GetSessionsAsync();
 
@@ -146,7 +145,8 @@ foreach (var item in items)
 
 ### Get Speakers
 
-Open **MyEvents\ViewModels\SpeakersViewModel.cs**, in the `GetSpeakers()` method, replace the code 
+Abrir el archivo **XamarinAssemble\ViewModels\SpeakersViewModel.cs**, en el metodo `GetSpeakers()` reemplazar el codigo
+
 ```csharp
 using (var client = new HttpClient())
 {
@@ -162,7 +162,8 @@ using (var client = new HttpClient())
     }
 }
 ```
-with the code to connect to cloud
+con el codigo para conectarnos a la nube
+
 ```csharp
 var items = await AzureDataManager.DefaultManager.GetSpeakersAsync();
 
@@ -173,11 +174,10 @@ foreach (var item in items)
     Speakers.Add(item);
 }
 ```
-That's it. Now run the app and see the data being pulled in from your Azure Easy Tables backend.
 
-## Run the App!
-Run the app on all available platforms. Head to Speakers tab and click on any speaker, edit the title and save. See if the data changes. Also, hit the url again to see if the data has been updated back in the cloud.
+Y eso es todo! Ahora podemos correr la aplicacion y ver los datos que son traidos desde el backend de Azure Tablas Faciles.
+
+## Correr la aplicacion!
+Corramos la aplicacion en todas las plataformas disponibles. Entremos al tab de Speakers y hagamos click en cualquier speaker, editemos el titulo y guardemos los cambios.Veamos si la informacion cambia. Ademas, peguemosle a la url de vuelta para ver si la informacion se actualizo en el backend.
 
 
-## Wrapping Up!
-We did great again! We looked at creating a no code backend with EasyTables and consumed the data in our app. Sessions and Speakers data were pulled from the cloud and updated the Speaker titles from the app. In the next module, we will look at creating a scalable backend using .NET APIs and authenticating users.
