@@ -309,6 +309,7 @@ mainPage.Children.Add(speakersPage);
 
 Nuestro codigo deberia ser algo asi:
 
+```csharp
 public App()
 {
     InitializeComponent();
@@ -331,24 +332,14 @@ public App()
 
     MainPage = mainPage; 
 }
+```
 
+### Page Navigations
+Xamarin.Forms provee varias experiencias de navegacion, dependiendo del tipo de pagina que estemos usando. Nosotros usamos **TabbedPage** en nuestro **MainPage** para poder obtener una navegacion mas sencilla. Ahora vamos a desarrollar una pagina de maestro-detalle. Cuando los usuarios seleccionen un item de la lista de Sessions, vamos a navegar hasta la pagina del detalle. Usaremos Hierarchical Navigation en la clase NavigationPage, la cual provee la experiencia de navegabilidad class en la cual el usuario puede navegar a traves de las distintas paginas, ya sea para adelante o para atras, segun desee. 
 
-Notice that we used the NavigationPage there. We will learn more about it in the next section.
+1. Agregamos el siguiente codigo en el archivo **SessionsPage.xaml.cs**:
 
-Run the App!
-Hey! You just created the SpeakersPage, pulled the data from the internet and bound to the view.
-
-Page Navigations
-Xamarin.Forms provides a number of different page navigation experiences, depending upon the Page type being used. We used the TabbedPage in our MainPage for an easy navigation. Now, we will build a master-Detail experience to our Session page i.e. when users click on an item in the Sessions List, we will navigate them to a detailed page. We will use Hierarchical Navigation using the NavigationPage class which provides a hierarchical navigation experience where the user is able to navigate through pages, forwards and backwards, as desired.
-
-The first page added to a navigation stack is referred to as the root page of the application, which is already done in the App.xaml.cs file.
-
-var sessionsPage = new NavigationPage(new SessionsPage()) { Title = "Sessions" };
-Open SessionsPage.xaml and add an ItemSelected event handler to the ListView SessionsListView.
-
-ItemSelected="OnItemSelected"
-Finally, add the EventHandlder to the code behind SessionsPage.xaml.cs
-
+```csharp
 async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 {
     var item = args.SelectedItem as Session;
@@ -360,6 +351,9 @@ async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
     // Manually deselect item
     SessionsListView.SelectedItem = null;
 }
-It is necessary to invoke the PushAsync method on the Navigation property of the current page, as demonstrated above. This causes the SessionDetailPage instance to be pushed onto the navigation stack, where it becomes the active page. Similarly, the active page can be popped method from the navigation stack by pressing the Back button on the device, regardless of whether this is a physical button on the device or an on-screen button. Alternatively, you can use the PopAsync method in code.
+```
+Es necesario invocar al metodo PushAsync, ya que esto causa que la instancia de SessionDetailPage sea apilada en el stack de navegacion, donde se convierte en una pagina activa. La pagina activa puede ser desapilada del stack de navegacion presionando el boton Atras del dispositivo. Otra alternativa es llamar al metodo PopAsync en el codigo.
+
+
 
 
