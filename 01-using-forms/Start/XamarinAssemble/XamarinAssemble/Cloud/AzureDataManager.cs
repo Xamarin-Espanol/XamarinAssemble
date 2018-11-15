@@ -168,6 +168,8 @@
 //        {
 //            try
 //            {
+//                await this.SyncAsync<Speaker>();
+
 //                return await this.tablaSpeaker.ToEnumerableAsync();
 //            }
 //            catch (MobileServiceInvalidOperationException msioe)

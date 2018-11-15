@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:XamarinAssemble;assembly=XamarinAssemble"
@@ -37,7 +37,7 @@
                         TextColor="White" Command="{Binding SpeakCommand}"/>-->
         <local:SpeakButton
                Margin="0,10,0,0"
-                        Text="Speak" Command="{Binding SpeakCommand}" />
+               Text="Speak" Command="{Binding SpeakCommand}" />
       </StackLayout>
     </ScrollView>
   </Grid>

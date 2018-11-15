@@ -161,6 +161,7 @@ namespace XamarinAssemble.Cloud
             {
                 Debug.WriteLine(@"Sync error: {0}", e.Message);
             }
+
             return null;
         }
 
@@ -168,6 +169,8 @@ namespace XamarinAssemble.Cloud
         {
             try
             {
+                await this.SyncAsync<Speaker>();
+
                 return await this.tablaSpeaker.ToEnumerableAsync();
             }
             catch (MobileServiceInvalidOperationException msioe)
@@ -178,6 +181,7 @@ namespace XamarinAssemble.Cloud
             {
                 Debug.WriteLine(@"Sync error: {0}", e.Message);
             }
+
             return null;
         }
 

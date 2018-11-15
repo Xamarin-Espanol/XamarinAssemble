@@ -48,12 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Mobile.Client">
-      <Version>4.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Azure.Mobile.Client.SQLiteStore">
-      <Version>4.0.2</Version>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
     </PackageReference>
@@ -79,7 +73,7 @@
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\XamarinAssemble\XamarinAssemble.csproj">
-      <Project>{5DD36CCF-D8DB-4940-94FA-96DCC67E9E8A}</Project>
+      <Project>{41F61456-0D43-4809-96D7-FFB3BC8B02FF}</Project>
       <Name>XamarinAssemble</Name>
     </ProjectReference>
   </ItemGroup>

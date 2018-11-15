@@ -17,7 +17,7 @@ namespace XamarinAssemble.ViewModels
         public ObservableCollection<Session> Sessions { get; set; }
 
         public ICommand GetSessionsCommand { get; set; }
-
+        
         public Task Initialization { get; private set; }
 
         public SessionsViewModel()

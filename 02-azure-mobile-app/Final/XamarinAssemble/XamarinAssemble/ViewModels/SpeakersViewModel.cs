@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -13,6 +14,8 @@ namespace XamarinAssemble.ViewModels
     public class SpeakersViewModel : ViewModelBase
     {
         public Task Initialization { get; private set; }
+        public ObservableCollection<Speaker> Speakers { get; set; }
+        public Command GetSpeakersCommand { get; set; }
 
         public SpeakersViewModel()
         {
@@ -21,10 +24,6 @@ namespace XamarinAssemble.ViewModels
             Initialization = GetSpeakers();
             GetSpeakersCommand = new Command(async () => await GetSpeakers());
         }
-
-        public ObservableCollection<Speaker> Speakers { get; set; }
-
-        public Command GetSpeakersCommand { get; set; }
 
         private async Task GetSpeakers()
         {
@@ -47,6 +46,7 @@ namespace XamarinAssemble.ViewModels
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("Error: " + ex);
                 error = ex;
             }
             finally

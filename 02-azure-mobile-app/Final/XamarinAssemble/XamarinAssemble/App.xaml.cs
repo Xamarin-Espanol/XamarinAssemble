@@ -12,10 +12,12 @@ namespace XamarinAssemble
 
             var mainPage = new TabbedPage();
             var sessionsPage = new NavigationPage(new SessionsPage()) { Title = "Sessions" };
+            // declare speakersPage here
             var speakersPage = new NavigationPage(new SpeakersPage()) { Title = "Speakers" };
             var aboutPage = new NavigationPage(new AboutPage()) { Title = "About" };
 
             mainPage.Children.Add(sessionsPage);
+            //add speakersPage here
             mainPage.Children.Add(speakersPage);
             mainPage.Children.Add(aboutPage);
 

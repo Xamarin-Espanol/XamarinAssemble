@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System.Runtime.CompilerServices;
+using Xamarin.Forms;
+using XamarinAssemble.ViewModels;
 
 namespace XamarinAssemble.Views
 {

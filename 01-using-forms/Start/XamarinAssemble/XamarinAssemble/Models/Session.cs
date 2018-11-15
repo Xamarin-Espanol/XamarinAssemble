@@ -3,7 +3,7 @@ using System;
 
 namespace XamarinAssemble.Models
 {
-    public class Session
+    public class Session : ModelBase
     {
         [JsonProperty("end")]
         public DateTime End { get; set; }

@@ -19,7 +19,6 @@
                   IsPullToRefreshEnabled="true"
                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                   CachingStrategy="RecycleElement"
-                    ItemSelected="OnItemSelected"
                   x:Name="SessionsListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
