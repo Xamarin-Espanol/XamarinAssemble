@@ -1,15 +1,15 @@
-# Construyendo una aplicacion en Xamarin Forms
+# Construyendo una aplicación en Xamarin Forms
 
-Durante todo el workshop vamos a trabajar con un proyecto desde 0, generando una aplicación en la cual se pueda traer informacion sobre los speakers y las charlas que se estuvieron dando.
+Durante el workshop, vamos a trabajar con un proyecto desde 0, generando una aplicación en la cual se pueda traer información sobre los speakers y las charlas que se dieron.
 
-En este modulo vamos a aprender a generar una aplicación y como ejecutarla, nos servira además para saber si tenemos el ambiente correctamente instalado para poder avanzar con el workshop.
+Además de generar la aplicación y ejecutarla, nos servirá para saber si tenemos el ambiente correctamente instalado para poder avanzar con el workshop.
 
-En la carpeta **Start** vamos a encontrar una Solucion ya empezada, a la cual le vamos a realizar ciertas modificaciones. Asi que vamos a abrir esa Solucion.
+En la carpeta **Start** vamos a encontrar una Solución ya empezada, a la cual le vamos a realizar ciertas modificaciones. Abrimos la Solución.
 
 ## Creando Model y ViewModels
 
 ### Model
-La informacion de los speakers va a ser traida de un endpoint del tipo rest. La clase **Speaker** es el modelo que es usado para guardar dichos datos. 
+La información de los speakers va a ser traída de un endpoint del tipo rest. La clase **Speaker** es el modelo usado para guardar dichos datos. 
 
 1. Abrir el archivo **XamarinAssemble/Models/Speaker.cs** y agregar las siguientes propiedades dentro de la clase **Speaker**.
 
@@ -55,13 +55,13 @@ public string Biography { get; set; }
 ```
 
 ### ViewModel
-El archivo **SpeakersViewModel.cs** nos va a proveer de toda la funcionalidad para poder mostrar la informacion. Va a consistir de una lista de speakers y un metodo que puede ser llamado para obtener los speakers desde el servidor. Tambien, va a contener un flag booleano que va a indicar si ya estamos obteniendo la informacion de los speakers en una tarea en segundo plano. 
+El archivo **SpeakersViewModel.cs** nos va a proveer de toda la funcionalidad para poder mostrar la información. Va a consistir en una lista de speakers y un mêtodo que puede ser llamado para obtener los speakers desde el servidor. También va a contener un flag booleano que va a indicar si ya estamos obteniendo la información de los speakers en una tarea en segundo plano. 
 
-1. Abrir el archivo **XamarinAssemble/ViewModels/SpeakersViewModel.cs** para trabajar sobre el.
+1. Abrir el archivo **XamarinAssemble/ViewModels/SpeakersViewModel.cs** para trabajar sobre él.
 
-Vamos a utilizar un **ObservableCollection** para guardar la informacion de los speakers dentro del ViewModel. Utilizaremos **ObservableCollection** porque soporta al evento **CollectionChanged**, el cual es un evento al que la vista se suscribe y automaticamente se actualiza cuando la informacion es añadida o removida.
+Vamos a utilizar un **ObservableCollection** para guardar la información de los speakers dentro del ViewModel. Utilizaremos **ObservableCollection** porque soporta al evento **CollectionChanged**, el cual es un evento al que la vista se suscribe y automaticamente se actualiza cuando la información es añadida o removida.
 
-2. Copiar el siguiente codigo arriba del constructor de **SpeakerViewModel** para poder declarar una property
+2. Copiar el siguiente código arriba del constructor de **SpeakerViewModel** para poder declarar una property:
 
 ```csharp
 public ObservableCollection<Speaker> Speakers { get; set; }
@@ -77,10 +77,10 @@ public SpeakersViewModel()
 }
 ```
 
-### Metodo GetSpeakers
-1. Crear un metodo llamado **GetSpeakers** en el archivo **XamarinAssemble/ViewModels/SpeakersViewModel.cs**, el cual va a devolver la lista de speakers desde el endpoint que mencionamos anteriormente. Primero, vamos a implementar un simple HTTP request, despues vamos a ir actualizando este metodo hasta que podamos tomar la informacion de Azure.
+### Método GetSpeakers
+1. Crear un método llamado **GetSpeakers** en el archivo **XamarinAssemble/ViewModels/SpeakersViewModel.cs**, el cual va a devolver la lista de speakers desde el endpoint que mencionamos anteriormente. Primero, vamos a implementar un simple HTTP request. Después vamos a ir actualizando este método hasta que podamos tomar la información de Azure.
 
-El metodo que estamos creando va a ser del tipo async, dado que es una Task.
+El método que estamos creando va a ser del tipo async, dado que es una Task.
 
 ```csharp
 private async Task GetSpeakers()
@@ -89,14 +89,14 @@ private async Task GetSpeakers()
 }
 ```
 
-2. Vamos a agregar el siguiente codigo dentro del metodo que acabamos de crear, para asegurarnos que todavia estamos tomando informacion del endpoint. Si * *IsBusy* * se encuentra en true retornamos y no llamamos al endpoint.
+2. Vamos a agregar el siguiente código dentro del método que acabamos de crear, para asegurarnos que todavía estamos tomando información del endpoint. Si * *IsBusy* * se encuentra en true retornamos y no llamamos al endpoint.
 
 ```csharp
 if(IsBusy)
         return;
 ```
 
-3. Lo siguiente que vammos a hacer es agregar el bloque * *try/catch* *:
+3. Lo siguiente que vamos a hacer es agregar el bloque * *try/catch* *:
 
 ```csharp
 private async Task GetSpeakers()
@@ -140,7 +140,7 @@ using(var client = new HttpClient())
 var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
 ```
 
-6. Agregar dentro el **using** el codigo para poder limpiar la lista de speakers y luego ir añadiendolos dentro del ObservableCollection:
+6. Agregar dentro el **using** el código para poder limpiar la lista de speakers y luego ir añadiendolos dentro del ObservableCollection:
 
 ```csharp
 Speakers.Clear();
@@ -150,14 +150,14 @@ foreach (var item in items)
 } 
 ```
 
-7. Si algo llega a salir mal dentro del try, el **catch** va a tomar la excepcion y despues del bloque finally vamos a mostrar una alerta.
+7. Si algo llega a salir mal dentro del try, el **catch** va a tomar la excepción y después del bloque finally, vamos a mostrar una alerta.
 
 ```csharp
 if (error != null)
     await Application.Current.MainPage.DisplayAlert("Error!", error.Message, "OK");
 ```
 
-El codigo completo despues de todas las lineas que fuimos agregando deberia verse asi:
+El código completo despues de todas las lineas que fuimos agregando deberia verse asi:
 
 ```csharp
 private async Task GetSpeakers()
@@ -202,11 +202,11 @@ private async Task GetSpeakers()
 }
 ```
 
-Y asi acabamos de terminar nuestro metodo para obtener toda la informacion acerca de los speakers!
+Y asi terminamos nuestro método para obtener toda la información acerca de los speakers!
 
 
 ### GetSpeakers Command
-En vez de invocar al metodo directamente, lo vamos a exponer con un **Command**. Un Command es una interface que conoce que metodo invocar y tiene un camino opcional para saber si el Command no esta ocupado.
+En vez de invocar al método directamente, lo vamos a exponer con un **Command**. Un Command es una interface que conoce que método invocar y tiene un camino opcional para saber si el Command no esta ocupado.
 
 1. Creamos un nuevo Command llamado **GetSpeakersCommand** en el ViewModel de los speakers:
 
@@ -214,7 +214,7 @@ En vez de invocar al metodo directamente, lo vamos a exponer con un **Command**.
 public Command GetSpeakersCommand { get; set; }
 ```
 
-2. Dentro del constructor del **SpeakersViewModel** creamos el **GetSpeakersCommand** y le pasamos dos metodos, uno para invocar al command y otro para saber cuando el command esta libre. 
+2. Dentro del constructor del **SpeakersViewModel** creamos el **GetSpeakersCommand** y le pasamos dos métodos, uno para invocar al command y otro para saber cuando el command esta libre. 
 
 ```csharp
  GetSpeakersCommand = new Command(async () => await GetSpeakers());
@@ -224,9 +224,9 @@ public Command GetSpeakersCommand { get; set; }
 Ahora construiremos nuestra interface en el archivo **Views/SpeakersPage.xaml**
 
 ### SpeakersPage.xaml
-En esta pagina vamos a agregar un **AbsoluteLayout** a la pagina, dentro de ese layout vamos a ir agregando los controles.
+Vamos a agregar un **AbsoluteLayout** a la página y dentro de ese layout, agregamos los controles.
 
-1. Entre los tags de inicio y de cierre del ContentPage agrgar el siguiente codigo:
+1. Entre los tags de inicio y de cierre del ContentPage agregar el siguiente código:
 ```csharp
    <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
@@ -241,7 +241,7 @@ En esta pagina vamos a agregar un **AbsoluteLayout** a la pagina, dentro de ese 
     AbsoluteLayout.LayoutBounds="0,0,1,1">
 </StackLayout>
 ```
-3. Usaremos un **ListView** que va a hacer el binding entre la coleccion de speakers para poder mostrar todos los items.  Podemos usar una propiedad especial llamada x:Name="" para nombrar cada control de la forma que queramos. 
+3. Usaremos un **ListView** que va a hacer el binding entre la colección de speakers para poder mostrar todos los items.  Podemos usar una propiedad especial llamada x:Name="" para nombrar cada control de la forma que queramos. 
 
 ```csharp
 <StackLayout
@@ -253,7 +253,7 @@ En esta pagina vamos a agregar un **AbsoluteLayout** a la pagina, dentro de ese 
         </ListView>
 </StackLayout>
 ```
-4. Necesitamos describir como se van a ver cada uno de los items, para hacer esto podemos usar un **ItemTemplate** que contenga un **DataTemplate**, Xamarin.Forms tiene por default Cells que podemos usar. En este caso vamos a utilizar **ImageCell**, que contiene una imagen y dos filas de texto.
+4. Necesitamos describir como se van a ver cada uno de los items. Para hacer esto, podemos usar un **ItemTemplate** que contenga un **DataTemplate**. Xamarin.Forms tiene por default Cells que podemos usar. En este caso vamos a utilizar **ImageCell**, que contiene una imagen y dos filas de texto.
 
 Agregar lo siguiente dentro del ListView:
 
@@ -268,7 +268,7 @@ Agregar lo siguiente dentro del ListView:
 ```
 
 5. Bajo el ListView podemos mostrar una barra de loading cuando se esten obteniendo datos del servidor. Podemos usar un **ActivityIndicator** para hacer eto y bindearlo con la propiedad * *IsBusy* * que nombramos anteriormente.
-Para hacer todo esto, vamos a añadir un nuevo **StackLayout** debajo del que teniamos y adentro escribimos el codigo para mostrar el **ActivityIndicator**
+Para hacer todo esto, vamos a añadir un nuevo **StackLayout** debajo del que teniamos y adentro escribimos el código para mostrar el **ActivityIndicator**
 
 ```csharp
 <StackLayout IsVisible="{Binding IsBusy}"
@@ -279,8 +279,8 @@ Para hacer todo esto, vamos a añadir un nuevo **StackLayout** debajo del que te
 </StackLayout>
 ```
 
-### Boton de sincronizacion
-1. Agregar un **ToolBarButton** al XAML y bindearlo al Command **GetSpeakersCommand**. Esto hara que se ejecute la llamada al servidor cara vez que se haga click sobre el boton. Escribir el codigo que se encuentra debajo entre los tags del **ContentPage**
+### Botón de sincronización
+1. Agregar un **ToolBarButton** al XAML y bindearlo al Command **GetSpeakersCommand**. Esto hará que se ejecute la llamada al servidor cada vez que se haga click sobre el botón. Escribir el código que se encuentra debajo entre los tags del **ContentPage**
 
 ```csharp
 <ContentPage.ToolbarItems>
@@ -321,10 +321,10 @@ protected override async void OnAppearing()
 }
 ```
 
-### Insertar la pagina de los speakers a la MainPage
+### Insertar la página de los speakers a la MainPage
 Como nuestra **MainPage** se compone de tabs, por ser una **TabbedPage**, tenemos que agregar la **SpeakersPage** como un hijo de esta. 
 
-1. Abrir el archivo **App.Xaml.cs** y agregarle al constructor el siguiente codigo:
+1. Abrir el archivo **App.Xaml.cs** y agregarle al constructor el siguiente código:
 
 ```csharp
 var speakersPage = new NavigationPage(new SpeakersPage()) { Title = "Speakers" };
@@ -336,7 +336,7 @@ var speakersPage = new NavigationPage(new SpeakersPage()) { Title = "Speakers" }
 mainPage.Children.Add(speakersPage);
 ```
 
-Nuestro codigo deberia ser algo asi:
+Nuestro código deberia ser similar al siguiente:
 
 ```csharp
 public App()
@@ -364,9 +364,9 @@ public App()
 ```
 
 ### Page Navigations
-Xamarin.Forms provee varias experiencias de navegacion, dependiendo del tipo de pagina que estemos usando. Nosotros usamos **TabbedPage** en nuestro **MainPage** para poder obtener una navegacion mas sencilla. Ahora vamos a desarrollar una pagina de maestro-detalle. Cuando los usuarios seleccionen un item de la lista de Sessions, vamos a navegar hasta la pagina del detalle. Usaremos Hierarchical Navigation en la clase NavigationPage, la cual provee la experiencia de navegabilidad class en la cual el usuario puede navegar a traves de las distintas paginas, ya sea para adelante o para atras, segun desee. 
+Xamarin.Forms provee varias experiencias de navegación, dependiendo del tipo de página que estemos usando. Nosotros usamos **TabbedPage** en nuestro **MainPage** para poder obtener una navegación más sencilla. Ahora vamos a desarrollar una página de maestro-detalle. Cuando los usuarios seleccionen un item de la lista de Sessions, vamos a navegar hasta la página del detalle. Usaremos Hierarchical Navigation en la clase NavigationPage, la cual provee la experiencia de navegabilidad class en la cual el usuario puede navegar a través de las distintas páginas, ya sea para adelante o para atrás, según desee. 
 
-1. Agregamos el siguiente codigo en el archivo **SessionsPage.xaml.cs**:
+1. Agregamos el siguiente código en el archivo **SessionsPage.xaml.cs**:
 
 ```csharp
 async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -381,21 +381,21 @@ async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
     SessionsListView.SelectedItem = null;
 }
 ```
-Es necesario invocar al metodo PushAsync, ya que esto causa que la instancia de SessionDetailPage sea apilada en el stack de navegacion, donde se convierte en una pagina activa. La pagina activa puede ser desapilada del stack de navegacion presionando el boton Atras del dispositivo. Otra alternativa es llamar al metodo PopAsync en el codigo.
+Es necesario invocar al modo PushAsync, ya que esto causa que la instancia de SessionDetailPage sea apilada en el stack de navegación, donde se convierte en una página activa. Esta puede ser desapilada del stack de navegación presionando el botón Atrás del dispositivo. Otra alternativa es llamar al método PopAsync en el código.
 
-### Ejecuta la aplicacin!
+### Ejecuta la aplicación!
 
-Ejecut la aplicacin en las distintas plataformas para notar las diferencias. 
+Ejecuta la aplicación en las distintas plataformas para notar las diferencias. 
 
 ## Platform Customizations
 
-Hasta ahora escribimos cada línea de código en nuestro proyecto comun (XamarinAssemble), que nos permitie compartir el 100% de código para todas las plataformas. Xamarin.Forms es extensible y te deja incorporar features especificas para cada plataforma. Podes utilizar la clase `Device` para crear comportamiento especifico dentro del código compartido y en la interfaz de usuario (incluido en XAML) para customizaciones sencillas. Si tenes customizaciones complejas, se puede utilizar `DependencyService` para invocar el código nativo desde la capa compartida. Los `CustomRenderers`  pueden ser utilizados para pequeños cambios de estilos o para sofisticados layout y comportamientos que utilicen caracteristicas especificas de cada plataforma.
+Hasta ahora escribimos cada línea de código en nuestro proyecto común (XamarinAssemble), que nos permite compartir el 100% de código para todas las plataformas. Xamarin.Forms es extensible y te deja incorporar features específicas para cada plataforma. Podes utilizar la clase `Device` para crear comportamiento específico dentro del código compartido y en la interfaz de usuario (incluido en XAML) para customizaciones sencillas. Si tenes customizaciones complejas, se puede utilizar `DependencyService` para invocar el código nativo desde la capa compartida. Los `CustomRenderers`  pueden ser utilizados para pequeños cambios de estilos o para sofisticados layout y comportamientos que utilicen características específicas de cada plataforma.
 
 ### Device.RuntimePlatform
 
-En iOS, los Tabs pueden mostrar iconos junto con el titulo. En tu aplicación, como el requerimiento es especifico para iOS, vamos a verificar que la plataforma sea iOS con la propiedad `Device.RuntimePlatform` para asignar los iconos.
+En iOS, los Tabs pueden mostrar iconos junto con el título. En tu aplicación, como el requerimiento es específico para iOS, vamos a verificar que la plataforma sea iOS con la propiedad `Device.RuntimePlatform` para asignar los iconos.
 
-Agrega este codigo dentro del constructos del archivo **App.xaml.cs**
+Agrega este código dentro del constructos del archivo **App.xaml.cs**
 
 ```chsarp
 Device.OnPlatform(iOS: () => {
@@ -411,9 +411,9 @@ La página sera similar a la que se muestra en la imagen debajo.
 ![iOS-Tabs](https://raw.githubusercontent.com/nishanil/Dev-Days-HOL/master/01%20Dev-Labs/screenshots/iOS-Tab-icons.png?token=AC9rtoWVK4eOTAWDV69qFcZyy9veMPJKks5X0mezwA%3D%3D)
 
 ### DependencyService
-Vamos a utilizar la API nativa de Text to Speech para leer el texto de los usuarios. Como cada plataforma provee su propia API para **Text to Speech**, vamos a utilizar `DependencyService` para invocar la implementacion de cada plataforma desde el código compartido.
+Vamos a utilizar la API nativa de Text to Speech para leer el texto de los usuarios. Como cada plataforma provee su propia API para **Text to Speech**, vamos a utilizar `DependencyService` para invocar la implementaciòn de cada plataforma desde el código compartido.
 
-Desde la interfaz `ITextToSpeech`, definí el metodo `Speak()`. Abrí el archivo **XamarinAssemble\ITextToSpeech.cs** y añadí el siguiente código:
+Desde la interfaz `ITextToSpeech`, definí el método `Speak()`. Abrí el archivo **XamarinAssemble\ITextToSpeech.cs** y añadí el siguiente código:
 
 ```csharp
 public interface ITextToSpeech
@@ -421,7 +421,7 @@ public interface ITextToSpeech
     void Speak(string text);
 }
 ```
-Abri el archivo **TextToSpeech.cs** en el proyecto Android **XamarinAssemble.Android** y añadi lo siguiente:
+Abrí el archivo **TextToSpeech.cs** en el proyecto Android **XamarinAssemble.Android** y añade lo siguiente:
 
 ```csharp
 public class TextToSpeechImplementation : Java.Lang.Object, ITextToSpeech, TextToSpeech.IOnInitListener
@@ -463,11 +463,11 @@ Descomenta el atributo `assembly` (arriba del namespace) en el mismo archivo.
 ```csharp
 [assembly: Xamarin.Forms.Dependency(typeof(TextToSpeechImplementation))]
 ```
-Este atributo registra la clase como una implementacion de la interfaz ITextToSpeech, lo que significa que podremos utilizar `DependencyService.Get<ITextToSpeech>()` desde el proyecto compartido para crear una instancia.
+Este atributo registra la clase como una implementación de la interfaz ITextToSpeech, lo que significa que podremos utilizar `DependencyService.Get<ITextToSpeech>()` desde el proyecto compartido para crear una instancia.
 
-Para facilitarlo, la implementacion de `TextToSpeech` para iOS ya se encuentra añadida. Podes mirar los archivos para ver como se realiza la implementación. 
+Para facilitarlo, la implementación de `TextToSpeech` para iOS ya se encuentra añadida. Podes mirar los archivos para ver como se realiza la implementación. 
 
-Finalmente, llama a la implementacion desde el proyecto compartido usando DependencyService. Abri el archivo **XamarinAssemble\SessionDetailViewModel** y agrega lo siguiente en la inicializacion del comando **SpeakCommand**. 
+Finalmente, llama a la implementación desde el proyecto compartido usando DependencyService. Abrí el archivo **XamarinAssemble\SessionDetailViewModel** y agrega lo siguiente en la inicialización del comando **SpeakCommand**. 
 
 ```csharp
 DependencyService.Get<ITextToSpeech>().Speak($"Session {SessionName} presented by {SpeakerName} is on {Time}");
@@ -478,11 +478,11 @@ DependencyService.Get<ITextToSpeech>().Speak($"Session {SessionName} presented b
 Corre la aplicación y presiona el botón de hablar.
 
 ### CustomRenderers
-Los `CustomRenderers` pueden ser utilizados para pequeños cambios de estilo o cambios sofisticados para cada plataforma. En esta aplicación, vamos a crear un boton custom llamado `SpeakButton` y añadiremos un Custom Renderer en el proyecto Android para mostrar una imagen junto al texto del boton. 
+Los `CustomRenderers` pueden ser utilizados para pequeños cambios de estilo o cambios sofisticados para cada plataforma. En esta aplicación, vamos a crear un botón custom llamado `SpeakButton` y añadiremos un Custom Renderer en el proyecto Android para mostrar una imagen junto al texto del mismo. 
 
-Abri el archivo **XamarinAssemble/Controls/SpeakButton.cs** y valida la existencia de una clase vacia que deriva de `Button`. Para mantener la simpleza de este workshop, lo mantendremos vacio. 
+Abrí el archivo **XamarinAssemble/Controls/SpeakButton.cs** y valida la existencia de una clase vacía que deriva de `Button`. Acorde a la simpleza de este workshop, lo mantendremos asi. 
 
-Abri la implementación del proyecto Android **XamarinAssemble.Android/Renderers/SpeakButtonRenderer.cs** y reemplaza el metodo `OnElementChanged()` para agregar la imagen al botón. Acá esta el código
+Abrí la implementación del proyecto Android **XamarinAssemble.Android/Renderers/SpeakButtonRenderer.cs** y reemplaza el método `OnElementChanged()` para agregar la imagen al botón. Acá esta el código:
 
 ```csharp
 protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
@@ -496,18 +496,19 @@ protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.B
     }
 }
 ```
-Ahora, abri el archivo **XamarinAssemble\Views\SessionDetailPage.xaml** y reemplaza el boton existente para **Speak** por el de **SpeakButton** que esta debajo.  
+Ahora, abrí el archivo **XamarinAssemble\Views\SessionDetailPage.xaml** y reemplaza el botón existente para **Speak** por el de **SpeakButton** que se encuentra debajo.  
 
 ```xml
 <local:SpeakButton
         Margin="0,10,0,0"
         Text="Speak" Command="{Binding SpeakCommand}" />
 ```
-Compila y corre el proyecto para ver los cambios en el boton. iOS y Android no tienen implementaciones customizadas por ello, muestran controles de botones regulares. Sentite libre de modificar los Custom Renderers y añadirles tu creatividad.
+Compila y corre el proyecto para ver los cambios en el botón. iOS y Android no tienen implementaciones customizadas. Por ello, muestran controles de botones regulares. Sentite libre de modificar los Custom Renderers y añadirles tu creatividad.
 
 ## Wrapping Up!
 
-Lo hicimos genial! Nuestra primer aplicación con Xamarin.Forms esta corriendo. En el proximo módulo nos vamos a conectar con Azure! 
+Lo hicimos genial! Nuestra primer aplicación con Xamarin.Forms está corriendo!
+En el próximo módulo nos vamos a conectar con Azure! 
 
 
 
