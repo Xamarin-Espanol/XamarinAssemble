@@ -16,6 +16,7 @@
                   VerticalOptions="FillAndExpand"
                   HasUnevenRows="true"
                   RefreshCommand="{Binding RefreshCommand}"
+                  ItemSelected="OnItemSelected"
                   IsPullToRefreshEnabled="true"
                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                   CachingStrategy="RecycleElement"

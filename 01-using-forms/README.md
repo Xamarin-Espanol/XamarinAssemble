@@ -383,6 +383,20 @@ async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
     SessionsListView.SelectedItem = null;
 }
 ```
+
+2. Modificamos la creacion del *ListView* en el archivo **SessionsPage.xaml**:
+```csharp
+<ListView ItemsSource="{Binding Sessions}"
+    VerticalOptions="FillAndExpand"
+    HasUnevenRows="true"
+    RefreshCommand="{Binding RefreshCommand}"
+    ItemSelected="OnItemSelected"
+    IsPullToRefreshEnabled="true"
+    IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+    CachingStrategy="RecycleElement"
+    x:Name="SessionsListView">
+```
+
 Es necesario invocar al modo PushAsync, ya que esto causa que la instancia de SessionDetailPage sea apilada en el stack de navegación, donde se convierte en una página activa. Esta puede ser desapilada del stack de navegación presionando el botón Atrás del dispositivo. Otra alternativa es llamar al método PopAsync en el código.
 
 ### Ejecuta la aplicación!

@@ -115,7 +115,7 @@ Abrir el archivo **XamarinAssemble\ViewModels\SessionsViewModel.cs**, en el mét
 using (var client = new HttpClient())
 {
     //grab json from server
-    var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/sessions?ZUMO-API-VERSION=2.0.0");
+    var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/sessions?ZUMO-API-VERSION=2.0.0");
 
     //Deserialize json
     var items = JsonConvert.DeserializeObject<List<Session>>(json);
@@ -123,9 +123,12 @@ using (var client = new HttpClient())
     //Load sessions into list
     Sessions.Clear();
 
-    foreach (var item in items)
+    if (items != null)
     {
-        Sessions.Add(item);
+        foreach (var item in items)
+        {
+            Sessions.Add(item);
+        }
     }
 }
 ```
@@ -151,14 +154,18 @@ Abrir el archivo **XamarinAssemble\ViewModels\SpeakersViewModel.cs**, en el mét
 using (var client = new HttpClient())
 {
     //grab json from server
-    var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/speakers?ZUMO-API-VERSION=2.0.0");
+    var json = await client.GetStringAsync($"{Constants.ApplicationURL} /tables/speakers?ZUMO-API-VERSION=2.0.0");
 
     var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
 
     Speakers.Clear();
-    foreach (var item in items)
+
+    if (items != null)
     {
-        Speakers.Add(item);
+        foreach (var item in items)
+        {
+            Speakers.Add(item);
+        }
     }
 }
 ```
