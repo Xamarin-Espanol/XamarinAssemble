@@ -19,7 +19,6 @@ namespace XamarinAssemble
             //add speakersPage here
             mainPage.Children.Add(aboutPage);
 
-
             MainPage = mainPage;
         }
 

@@ -220,6 +220,21 @@ public Command GetSpeakersCommand { get; set; }
  GetSpeakersCommand = new Command(async () => await GetSpeakers());
 ```
 
+### Initialization
+Vamos a utilizar la inicialización para traer desde el servidor la lista de Speakers cuando generamos el ViewModel.
+
+1. Creamos una Task llamada **Initialization** en el ViewModel de los speakers:
+
+```csharp
+public Task Initialization { get; private set; }
+```
+
+2. Dentro del constructor del **SpeakersViewModel** le asignamos a la propiedad **Initialization** el método **GetSpeakers**. Al no realizar una await del mismo, este no se va a ejecutar.
+
+```csharp
+Initialization = GetSpeakers();
+```
+
 ## Creando UI en XAML y DataBinding
 Ahora construiremos nuestra interface en el archivo **Views/SpeakersPage.xaml**
 
@@ -239,6 +254,7 @@ Vamos a agregar un **AbsoluteLayout** a la página y dentro de ese layout, agreg
 <StackLayout
     AbsoluteLayout.LayoutFlags="All"
     AbsoluteLayout.LayoutBounds="0,0,1,1">
+
 </StackLayout>
 ```
 3. Usaremos un **ListView** que va a hacer el binding entre la colección de speakers para poder mostrar todos los items.  Podemos usar una propiedad especial llamada x:Name="" para nombrar cada control de la forma que queramos. 
@@ -267,7 +283,7 @@ Agregar lo siguiente dentro del ListView:
 </ListView.ItemTemplate>
 ```
 
-5. Bajo el ListView podemos mostrar una barra de loading cuando se esten obteniendo datos del servidor. Podemos usar un **ActivityIndicator** para hacer eto y bindearlo con la propiedad * *IsBusy* * que nombramos anteriormente.
+5. Bajo el ListView podemos mostrar una barra de loading cuando se esten obteniendo datos del servidor. Podemos usar un **ActivityIndicator** para hacer eto y bindearlo con la propiedad **IsBusy** que nombramos anteriormente.
 Para hacer todo esto, vamos a añadir un nuevo **StackLayout** debajo del que teniamos y adentro escribimos el código para mostrar el **ActivityIndicator**
 
 ```csharp
@@ -321,6 +337,8 @@ protected override async void OnAppearing()
 }
 ```
 
+La propiedad *BindingContext* nos permite asignarle a la vista cual será el modelo del que tiene que adquirir los datos para ser mostrados. Como actualmente los constructores no pueden ser asinconicos, sobreescribimos el método *OnAppearing* para inicializar el ViewModel.
+
 ### Insertar la página de los speakers a la MainPage
 Como nuestra **MainPage** se compone de tabs, por ser una **TabbedPage**, tenemos que agregar la **SpeakersPage** como un hijo de esta. 
 
@@ -352,19 +370,12 @@ public App()
     mainPage.Children.Add(speakersPage);
     mainPage.Children.Add(aboutPage);
 
-    if (Device.RuntimePlatform == Device.iOS)
-    {
-        sessionsPage.Icon = "tab_feed.png";
-        speakersPage.Icon = "tab_person.png";
-        aboutPage.Icon = "tab_about.png";
-    }
-
     MainPage = mainPage; 
 }
 ```
 
 ### Page Navigations
-Xamarin.Forms provee varias experiencias de navegación, dependiendo del tipo de página que estemos usando. Nosotros usamos **TabbedPage** en nuestro **MainPage** para poder obtener una navegación más sencilla. Ahora vamos a desarrollar una página de maestro-detalle. Cuando los usuarios seleccionen un item de la lista de Sessions, vamos a navegar hasta la página del detalle. Usaremos Hierarchical Navigation en la clase NavigationPage, la cual provee la experiencia de navegabilidad class en la cual el usuario puede navegar a través de las distintas páginas, ya sea para adelante o para atrás, según desee. 
+Xamarin.Forms provee varias experiencias de navegación, dependiendo del tipo de página que estemos usando. Nosotros usamos **TabbedPage** en nuestro **MainPage** para poder obtener una navegación más sencilla. Ahora vamos a desarrollar una página de maestro-detalle. Cuando los usuarios seleccionen un item de la lista de Sessions, vamos a navegar hasta la página del detalle. Usaremos Hierarchical Navigation en la clase NavigationPage, la cual provee la experiencia de navegabilidad en la cual el usuario puede navegar a través de las distintas páginas, ya sea para adelante o para atrás, según desee. 
 
 1. Agregamos el siguiente código en el archivo **SessionsPage.xaml.cs**:
 
@@ -395,15 +406,15 @@ Hasta ahora escribimos cada línea de código en nuestro proyecto común (Xamari
 
 En iOS, los Tabs pueden mostrar iconos junto con el título. En tu aplicación, como el requerimiento es específico para iOS, vamos a verificar que la plataforma sea iOS con la propiedad `Device.RuntimePlatform` para asignar los iconos.
 
-Agrega este código dentro del constructos del archivo **App.xaml.cs**
+Agrega este código dentro del constructor del archivo **App.xaml.cs**
 
 ```chsarp
-Device.OnPlatform(iOS: () => {
+if (Device.RuntimePlatform == Device.iOS)
+{
     sessionsPage.Icon = "tab_feed.png";
     speakersPage.Icon = "tab_person.png";
     aboutPage.Icon = "tab_about.png";
-
-});
+}
 ```
 
 La página sera similar a la que se muestra en la imagen debajo.
@@ -411,7 +422,7 @@ La página sera similar a la que se muestra en la imagen debajo.
 ![iOS-Tabs](https://raw.githubusercontent.com/nishanil/Dev-Days-HOL/master/01%20Dev-Labs/screenshots/iOS-Tab-icons.png?token=AC9rtoWVK4eOTAWDV69qFcZyy9veMPJKks5X0mezwA%3D%3D)
 
 ### DependencyService
-Vamos a utilizar la API nativa de Text to Speech para leer el texto de los usuarios. Como cada plataforma provee su propia API para **Text to Speech**, vamos a utilizar `DependencyService` para invocar la implementaciòn de cada plataforma desde el código compartido.
+Vamos a utilizar la API nativa de Text to Speech para leer el texto de las sesiones. Como cada plataforma provee su propia API para **Text to Speech**, vamos a utilizar `DependencyService` para invocar la implementación de cada plataforma desde el código compartido.
 
 Desde la interfaz `ITextToSpeech`, definí el método `Speak()`. Abrí el archivo **XamarinAssemble\ITextToSpeech.cs** y añadí el siguiente código:
 
@@ -491,8 +502,7 @@ protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.B
 
     if (Control != null)
     {
-        Control.SetCompoundDrawablesWithIntrinsicBounds(0, Resource.Drawable.speakerphone, 0, 0);
-        
+        Control.SetCompoundDrawablesWithIntrinsicBounds(0, Resource.Drawable.speakerphone, 0, 0); 
     }
 }
 ```

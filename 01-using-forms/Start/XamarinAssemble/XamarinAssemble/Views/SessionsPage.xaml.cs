@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using XamarinAssemble.Models;
 using XamarinAssemble.ViewModels;
 
 namespace XamarinAssemble.Views
@@ -7,6 +8,7 @@ namespace XamarinAssemble.Views
     public partial class SessionsPage : ContentPage
     {
         private SessionsViewModel sessionsViewModel;
+        
         public SessionsPage()
         {
             InitializeComponent();
