@@ -9,6 +9,7 @@ namespace MyEvents.iOS.Renderers
 {
     public class SpeakButtonRenderer : ButtonRenderer
     {
+        // Add iOS specific customization here
         protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);

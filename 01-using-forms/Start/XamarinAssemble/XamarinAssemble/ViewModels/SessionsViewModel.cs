@@ -40,7 +40,7 @@ namespace XamarinAssemble.ViewModels
                 using (var client = new HttpClient())
                 {
                     //grab json from server
-                    var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/speakers?ZUMO-API-VERSION=2.0.0");
+                    var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/sessions?ZUMO-API-VERSION=2.0.0");
 
                     //Deserialize json
                     var items = JsonConvert.DeserializeObject<List<Session>>(json);

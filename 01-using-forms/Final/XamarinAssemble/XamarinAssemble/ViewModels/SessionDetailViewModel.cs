@@ -40,6 +40,7 @@ namespace XamarinAssemble.ViewModels
 
             SpeakCommand = new Command(() =>
             {
+                // add DependencyService call here
                 DependencyService.Get<ITextToSpeech>().Speak($"Session {SessionName} presented by {SpeakerName} is on {Time}");
             });
         }

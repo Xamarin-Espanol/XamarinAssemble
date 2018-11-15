@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,6 +13,8 @@ namespace XamarinAssemble.ViewModels
     public class SpeakersViewModel : ViewModelBase
     {
         public Task Initialization { get; private set; }
+        public ObservableCollection<Speaker> Speakers { get; set; }
+        public Command GetSpeakersCommand { get; set; }
 
         public SpeakersViewModel()
         {
@@ -20,10 +23,6 @@ namespace XamarinAssemble.ViewModels
             Initialization = GetSpeakers();
             GetSpeakersCommand = new Command(async () => await GetSpeakers());
         }
-
-        public ObservableCollection<Speaker> Speakers { get; set; }
-
-        public Command GetSpeakersCommand { get; set; }
 
         private async Task GetSpeakers()
         {
@@ -40,18 +39,21 @@ namespace XamarinAssemble.ViewModels
                     //grab json from server
                     var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/speakers?ZUMO-API-VERSION=2.0.0");
 
+                    //Deserialize json
                     var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
 
+                    //Load speakers into list
                     Speakers.Clear();
                     foreach (var item in items)
                     {
                         Speakers.Add(item);
                     }
-                }
 
+                }
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("Error: " + ex);
                 error = ex;
             }
             finally

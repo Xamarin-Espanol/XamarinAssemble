@@ -8,6 +8,7 @@ namespace XamarinAssemble.Views
     public partial class SessionsPage : ContentPage
     {
         private SessionsViewModel sessionsViewModel;
+
         public SessionsPage()
         {
             InitializeComponent();
@@ -17,7 +18,7 @@ namespace XamarinAssemble.Views
         }
 
         // Add OnItemSelected event handler here
-
+        
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -31,10 +32,7 @@ namespace XamarinAssemble.Views
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new SessionDetailPage
-            {
-                BindingContext = new SessionDetailViewModel(item)
-            });
+            await Navigation.PushAsync(new SessionDetailPage() { BindingContext = new SessionDetailViewModel(item) });
 
             // Manually deselect item
             SessionsListView.SelectedItem = null;

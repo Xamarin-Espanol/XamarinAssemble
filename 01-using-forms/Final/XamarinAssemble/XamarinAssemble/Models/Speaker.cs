@@ -42,6 +42,5 @@ namespace XamarinAssemble.Models
 
         [JsonProperty("biography")]
         public string Biography { get; set; }
-
     }
 }
