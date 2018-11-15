@@ -130,7 +130,7 @@ El atributo * *IsBusy* * esta en true cuando realizamos la llamada al servidor, 
 using(var client = new HttpClient())
 {
    //grab json from server
-   var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/speakers?ZUMO-API-VERSION=2.0.0");
+   var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/speakers?ZUMO-API-VERSION=2.0.0");
 }
 ```
 
@@ -173,7 +173,7 @@ private async Task GetSpeakers()
         using(var client = new HttpClient())
         {
             //grab json from server
-            var json = await client.GetStringAsync("https://xamarinassemblebaires.azurewebsites.net/tables/speakers?ZUMO-API-VERSION=2.0.0");
+            var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/speakers?ZUMO-API-VERSION=2.0.0");
             
             //Deserialize json
             var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
