@@ -1,3 +1,4 @@
+using Android.Content;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using XamarinAssemble;
@@ -8,6 +9,10 @@ namespace XamarinAssemble.Droid.Renderers
 {
     public class SpeakButtonRenderer : ButtonRenderer
     {
+        public SpeakButtonRenderer(Context context) : base(context)
+        {
+        }
+
         // Add Android specific customization here
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Button> e)
         {

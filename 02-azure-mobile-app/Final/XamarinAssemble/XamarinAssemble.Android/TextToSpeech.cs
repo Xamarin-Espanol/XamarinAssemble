@@ -13,20 +13,17 @@ namespace XamarinAssemble.Droid
         TextToSpeech speaker;
         string toSpeak;
 
-        public TextToSpeechImplementation() { }
-
         public void Speak(string text)
         {
-            var ctx = Forms.Context; // useful for many Android SDK features
             toSpeak = text;
+         
             if (speaker == null)
             {
-                speaker = new TextToSpeech(ctx, this);
+                speaker = new TextToSpeech(MainActivity.Instance, this);
             }
             else
             {
-                var p = new Dictionary<string, string>();
-                speaker.Speak(toSpeak, QueueMode.Flush, p);
+                speaker.Speak(toSpeak, QueueMode.Flush, null, null);
             }
         }
 
@@ -35,8 +32,7 @@ namespace XamarinAssemble.Droid
         {
             if (status.Equals(OperationResult.Success))
             {
-                var p = new Dictionary<string, string>();
-                speaker.Speak(toSpeak, QueueMode.Flush, p);
+                speaker.Speak(toSpeak, QueueMode.Flush, null, null);
             }
         }
         #endregion
