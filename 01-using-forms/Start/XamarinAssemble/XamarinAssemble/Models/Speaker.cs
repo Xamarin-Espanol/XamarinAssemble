@@ -2,7 +2,7 @@
 
 namespace XamarinAssemble.Models
 {
-    public class Speaker : ModelBase
+    public class Speakers : ModelBase
     {
     }
 }

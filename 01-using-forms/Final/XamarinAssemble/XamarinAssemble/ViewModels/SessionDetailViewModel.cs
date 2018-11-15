@@ -16,9 +16,9 @@ namespace XamarinAssemble.ViewModels
 
         public string Time { get { return formattedTime; } }
 
-        private Session selectedSession;
+        private Sessions selectedSession;
 
-        public Session SelectedSession
+        public Sessions SelectedSession
         {
             get { return selectedSession; }
             set { if (selectedSession == value) return; selectedSession = value; OnPropertyChanged(nameof(SelectedSession)); }
@@ -26,7 +26,7 @@ namespace XamarinAssemble.ViewModels
 
         public ICommand SpeakCommand { get; set; }
 
-        public SessionDetailViewModel(Session selectedSession = null)
+        public SessionDetailViewModel(Sessions selectedSession = null)
         {
             SelectedSession = selectedSession;
 

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:vm="clr-namespace:XamarinAssemble.ViewModels;assembly=XamarinAssemble"
              x:Class="XamarinAssemble.Views.SpeakersPage"
-             Title="{Binding Title}"
-             x:Name="SpeakersPage">
+             Title="{Binding Title}">
 
 </ContentPage>

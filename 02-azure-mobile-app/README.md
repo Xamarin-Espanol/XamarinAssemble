@@ -62,11 +62,11 @@ Abrir un browser y pegarle a los recursos con el siguiente formato:
 
 **Speaker**
 ```
-https://<yourappservicename>.azurewebsites.net/tables/Speaker?ZUMO-API-VERSION=2.0.0 
+https://<yourappservicename>.azurewebsites.net/tables/Speakers?ZUMO-API-VERSION=2.0.0 
 ```
 **Session**
 ```
-https://<yourappservicename>.azurewebsites.net/tables/Session?ZUMO-API-VERSION=2.0.0 
+https://<yourappservicename>.azurewebsites.net/tables/Sessions?ZUMO-API-VERSION=2.0.0 
 ```
 Ambos deberian devolverte la información en formato `json`.
 
@@ -97,8 +97,8 @@ private void Initialize()
         Constants.ApplicationURL);
 
     var store = new MobileServiceSQLiteStore("localstore.db");
-    store.DefineTable<Session>();
-    store.DefineTable<Speaker>();
+    store.DefineTable<Sessions>();
+    store.DefineTable<Speakers>();
 
     //Initializes the SyncContext using the default IMobileServiceSyncHandler.
     this.client.SyncContext.InitializeAsync(store);
@@ -118,17 +118,14 @@ using (var client = new HttpClient())
     var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/sessions?ZUMO-API-VERSION=2.0.0");
 
     //Deserialize json
-    var items = JsonConvert.DeserializeObject<List<Session>>(json);
+    var items = JsonConvert.DeserializeObject<List<Sessions>>(json);
 
     //Load sessions into list
     Sessions.Clear();
 
-    if (items != null)
+    foreach (var item in items)
     {
-        foreach (var item in items)
-        {
-            Sessions.Add(item);
-        }
+        Sessions.Add(item);
     }
 }
 ```
@@ -140,9 +137,12 @@ var items = await AzureDataManager.DefaultManager.GetSessionsAsync();
 //Load sessions into list
 Sessions.Clear();
 
-foreach (var item in items)
+if (items != null)
 {
-    Sessions.Add(item);
+    foreach (var item in items)
+    {
+        Sessions.Add(item);
+    }
 }
 ```
 
@@ -156,7 +156,7 @@ using (var client = new HttpClient())
     //grab json from server
     var json = await client.GetStringAsync($"{Constants.ApplicationURL} /tables/speakers?ZUMO-API-VERSION=2.0.0");
 
-    var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
+    var items = JsonConvert.DeserializeObject<List<Speakers>>(json);
 
     Speakers.Clear();
 

@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:vm="clr-namespace:XamarinAssemble.ViewModels;assembly=XamarinAssemble"
              x:Class="XamarinAssemble.Views.SpeakersPage"
-             Title="{Binding Title}"
-             x:Name="SpeakersPage">
+             Title="{Binding Title}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Sync" Command="{Binding GetSpeakersCommand}" />
     </ContentPage.ToolbarItems>
@@ -18,7 +17,7 @@
                     <DataTemplate>
                         <ImageCell Text="{Binding Name}"
                     Detail="{Binding Title}"
-                    ImageSource="{Binding Avatar}"/>
+                    ImageSource="{Binding Image}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

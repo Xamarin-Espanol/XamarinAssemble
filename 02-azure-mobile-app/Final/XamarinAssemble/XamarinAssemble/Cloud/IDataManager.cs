@@ -6,7 +6,7 @@ namespace XamarinAssemble.Cloud
 {
     public interface IDataManager
     {
-        Task<IEnumerable<Session>> GetSessionsAsync();
-        Task<IEnumerable<Speaker>> GetSpeakersAsync();
+        Task<IEnumerable<Sessions>> GetSessionsAsync();
+        Task<IEnumerable<Speakers>> GetSpeakersAsync();
     }
 }

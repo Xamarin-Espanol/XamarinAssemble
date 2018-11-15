@@ -13,7 +13,7 @@ namespace XamarinAssemble.ViewModels
 {
     public class SessionsViewModel : ViewModelBase
     {
-        public ObservableCollection<Session> Sessions { get; set; }
+        public ObservableCollection<Sessions> Sessions { get; set; }
 
         public ICommand GetSessionsCommand { get; set; }
         
@@ -21,7 +21,7 @@ namespace XamarinAssemble.ViewModels
 
         public SessionsViewModel()
         {
-            Sessions = new ObservableCollection<Session>();
+            Sessions = new ObservableCollection<Sessions>();
             Title = "Sessions";
             Initialization = GetSessions();
             GetSessionsCommand = RefreshCommand = new Command(async () => await GetSessions());
@@ -43,7 +43,7 @@ namespace XamarinAssemble.ViewModels
                     var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/session?ZUMO-API-VERSION=2.0.0");
 
                     //Deserialize json
-                    var items = JsonConvert.DeserializeObject<List<Session>>(json);
+                    var items = JsonConvert.DeserializeObject<List<Sessions>>(json);
 
                     //Load sessions into list
                     Sessions.Clear();

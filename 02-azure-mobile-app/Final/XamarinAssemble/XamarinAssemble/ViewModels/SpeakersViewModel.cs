@@ -14,12 +14,12 @@ namespace XamarinAssemble.ViewModels
     public class SpeakersViewModel : ViewModelBase
     {
         public Task Initialization { get; private set; }
-        public ObservableCollection<Speaker> Speakers { get; set; }
+        public ObservableCollection<Speakers> Speakers { get; set; }
         public Command GetSpeakersCommand { get; set; }
 
         public SpeakersViewModel()
         {
-            Speakers = new ObservableCollection<Speaker>();
+            Speakers = new ObservableCollection<Speakers>();
             Title = "Speakers";
             Initialization = GetSpeakers();
             GetSpeakersCommand = new Command(async () => await GetSpeakers());

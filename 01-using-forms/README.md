@@ -11,7 +11,7 @@ En la carpeta **Start** vamos a encontrar una Solución ya empezada, a la cual l
 ### Model
 La información de los speakers va a ser traída de un endpoint del tipo rest. La clase **Speaker** es el modelo usado para guardar dichos datos. 
 
-1. Abrir el archivo **XamarinAssemble/Models/Speaker.cs** y agregar las siguientes propiedades dentro de la clase **Speaker**.
+1. Abrir el archivo **XamarinAssemble/Models/Speakers.cs** y agregar las siguientes propiedades dentro de la clase **Speakers**.
 
 ```csharp
 [JsonProperty("name")]
@@ -55,7 +55,7 @@ Vamos a utilizar un **ObservableCollection** para guardar la información de los
 2. Copiar el siguiente código arriba del constructor de **SpeakerViewModel** para poder declarar una property:
 
 ```csharp
-public ObservableCollection<Speaker> Speakers { get; set; }
+public ObservableCollection<Speakers> Speakers { get; set; }
 ```
 
 3. Dentro del constructor de la clase, crear una nueva instancia de **ObservableCollection**:
@@ -63,7 +63,7 @@ public ObservableCollection<Speaker> Speakers { get; set; }
 ```csharp
 public SpeakersViewModel()
 {
-    Speakers = new ObservableCollection<Speaker>();
+    Speakers = new ObservableCollection<Speakers>();
     Title = "Speakers";
 }
 ```
@@ -128,7 +128,7 @@ using(var client = new HttpClient())
 5. Dentro del **using** vamos a deserializar el json que es enviado por el servidor y a convertirlo en una lista de Speakers usando Json.NET:
 
 ```csharp
-var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
+var items = JsonConvert.DeserializeObject<List<Speakers>>(json);
 ```
 
 6. Agregar dentro el **using** el código para poder limpiar la lista de speakers y luego ir añadiendolos dentro del ObservableCollection:
@@ -167,7 +167,7 @@ private async Task GetSpeakers()
             var json = await client.GetStringAsync($"{Constants.ApplicationURL}/tables/speakers?ZUMO-API-VERSION=2.0.0");
             
             //Deserialize json
-            var items = JsonConvert.DeserializeObject<List<Speaker>>(json);
+            var items = JsonConvert.DeserializeObject<List<Speakers>>(json);
             
             //Load speakers into list
             Speakers.Clear();
@@ -269,7 +269,7 @@ Agregar lo siguiente dentro del ListView:
     <DataTemplate>
         <ImageCell Text="{Binding Name}"
                     Detail="{Binding Title}"
-                    ImageSource="{Binding Avatar}"/>
+                    ImageSource="{Binding Image}"/>
     </DataTemplate>
 </ListView.ItemTemplate>
 ```
