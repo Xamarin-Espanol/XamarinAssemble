@@ -41,15 +41,6 @@ public string Twitter { get; set; }
 [JsonProperty("email")]
 public string Email { get; set; }
 
-[JsonProperty("avatar")]
-public string Avatar { get; set; }
-
-[JsonProperty("webiste")]
-public string Webiste { get; set; }
-
-[JsonProperty("titile")]
-public string Titile { get; set; }
-
 [JsonProperty("biography")]
 public string Biography { get; set; }
 ```
