@@ -373,7 +373,7 @@ Xamarin.Forms provee varias experiencias de navegación, dependiendo del tipo de
 ```csharp
 async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 {
-    var item = args.SelectedItem as Session;
+    var item = args.SelectedItem as Sessions;
     if (item == null)
         return;
 
